@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "726775147759",
+    "project_id": "cantakilit",
+    "storage_bucket": "cantakilit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726775147759:android:bae4bac69762c82c0d7f1a",
+        "android_client_info": {
+          "package_name": "com.beykoz.cantakilit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT9uZ0xszolIceun-CgYaFdAn8O3kpbYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
