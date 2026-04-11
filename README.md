@@ -23,7 +23,6 @@ EcoStyle, kütüphaneler, kafeler ve ortak çalışma alanları gibi toplu kulla
 - **Frontend:** [React.js](https://reactjs.org/) + [Vite](https://vitejs.dev/)
 - **State Yönetimi:** React Context API
 - **Backend/Database:** [Firebase](https://firebase.google.com/) (Firestore & Auth)
-- **Mobil Entegrasyon:** [Capacitor](https://capacitorjs.com/) (iOS & Android desteği)
 - **UI & UX:** Custom Vanilla CSS (Modern, Premium & Responsive Design)
 - **Bildirimler:** [SweetAlert2](https://sweetalert2.github.io/)
 
