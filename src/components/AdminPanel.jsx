@@ -564,7 +564,7 @@ export default function AdminPanel() {
             <div className="reports-container">
               <div className="admin-page-title">Sistem Raporları</div>
               <div className="admin-page-subtitle">Kiralama verilerinin detaylı analizi ve performans göstergeleri.</div>
-              
+
               <div className="stats-grid">
                 <div className="stat-card" style={{ borderTop: '4px solid var(--green-dark)' }}>
                   <div className="stat-label">Toplam Gelir</div>
@@ -578,7 +578,7 @@ export default function AdminPanel() {
                 <div className="stat-card" style={{ borderTop: '4px solid var(--warning)' }}>
                   <div className="stat-label">Toplam Kiralama Süresi</div>
                   <div className="stat-value">
-                    {Math.round(completedRentals.reduce((acc, r) => acc + (r.endTime - r.startTime), 0) / (1000 * 60 * 60))} Saat
+                    {Math.round(completedRentals.reduce((acc, r) => acc + (r.endTime - r.startTime), 0) / (1000 * 60))} Dakika
                   </div>
                 </div>
               </div>
@@ -631,20 +631,20 @@ export default function AdminPanel() {
                       const max = Math.max(...hourBuckets) || 1;
                       return hourBuckets.map((count, hour) => (
                         <div key={hour} style={{ textAlign: 'center' }}>
-                          <div style={{ 
-                            height: 60, 
-                            background: 'var(--cream-dark)', 
-                            borderRadius: 4, 
-                            position: 'relative', 
-                            overflow: 'hidden', 
-                            marginBottom: 4 
+                          <div style={{
+                            height: 60,
+                            background: 'var(--cream-dark)',
+                            borderRadius: 4,
+                            position: 'relative',
+                            overflow: 'hidden',
+                            marginBottom: 4
                           }}>
-                            <div style={{ 
-                              position: 'absolute', 
-                              bottom: 0, 
-                              left: 0, 
-                              right: 0, 
-                              height: `${(count / max) * 100}%`, 
+                            <div style={{
+                              position: 'absolute',
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              height: `${(count / max) * 100}%`,
                               background: count === max ? 'var(--green-dark)' : 'var(--green-mid)',
                               transition: 'height 0.3s'
                             }}></div>
