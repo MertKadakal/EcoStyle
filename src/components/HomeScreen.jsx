@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { useApp } from '../store/AppContext';
 import { formatElapsed, calcFee } from '../utils/helpers';
 import sweetalert from 'sweetalert2';
+import QRScanner from './QRScanner';
 
 export default function HomeScreen() {
   const { currentUser, setView, rentals, activeRentalId, tick, addBalance } = useApp();
+  const [isScanning, setIsScanning] = useState(false);
 
   const activeRental = rentals.find(r => r.id === activeRentalId);
   const isPending = activeRental?.status === 'pending_return';
@@ -45,6 +48,8 @@ export default function HomeScreen() {
 
   return (
     <div className="screen animate-fadeInUp">
+      {isScanning && <QRScanner onClose={() => setIsScanning(false)} />}
+
       <div className="home-header">
         <div className="home-app-bar">
           <div className="app-logo">
@@ -52,6 +57,13 @@ export default function HomeScreen() {
             <span>EcoStyle</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <button 
+              id="home-qr-header-btn" 
+              onClick={() => setIsScanning(true)}
+              style={{ background: 'var(--green-pale)', border: 'none', cursor: 'pointer', fontSize: 18, width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyCenter: 'center' }}
+            >
+              📷
+            </button>
             <button id="home-notif-btn" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20 }}>🔔</button>
           </div>
         </div>
@@ -103,17 +115,18 @@ export default function HomeScreen() {
           </div>
         )}
 
-
-
         {/* Action Buttons */}
         <div className="action-btn-row">
-          <button id="home-rent-btn" className="action-btn-green" onClick={() => setView('bags')}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 20 }}>👜</span>
-              <span>Çanta Kirala</span>
-            </span>
-            <span>›</span>
-          </button>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <button id="home-scan-btn" className="action-btn-green" onClick={() => setIsScanning(true)} style={{ justifyContent: 'center', gap: 10 }}>
+              <span style={{ fontSize: 18 }}>📷</span>
+              <span>QR TARA</span>
+            </button>
+            <button id="home-rent-btn" className="action-btn-green" onClick={() => setView('bags')} style={{ justifyContent: 'center', gap: 10, background: 'var(--green-dark)' }}>
+              <span style={{ fontSize: 18 }}>👜</span>
+              <span>LİSTELE</span>
+            </button>
+          </div>
           <button id="home-balance-btn" className="action-btn-cream" onClick={handleAddBalance}>
             <span>➕</span>
             <span>BAKİYE YÜKLE</span>
