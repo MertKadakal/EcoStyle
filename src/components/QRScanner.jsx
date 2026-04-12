@@ -3,7 +3,7 @@ import { useApp } from '../store/AppContext';
 import sweetalert from 'sweetalert2';
 
 export default function QRScanner({ onClose }) {
-  const { bags, locations, setSelectedBag, setSelectedLocation, setView } = useApp();
+  const { bags, locations, setSelectedBag, setSelectedLocation, setView, setCanStartRental } = useApp();
   const scannerRef = useRef(null);
   const html5QrCodeRef = useRef(null);
 
@@ -29,6 +29,7 @@ export default function QRScanner({ onClose }) {
         const location = locations.find(l => l.id === bag.locationId);
         
         html5QrCode.stop().then(() => {
+          setCanStartRental(true);
           setSelectedLocation(location);
           setSelectedBag(bag);
           setView('rental-detail');

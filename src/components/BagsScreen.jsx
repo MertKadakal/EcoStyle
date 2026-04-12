@@ -9,7 +9,7 @@ const LOCATION_ICONS = {
 };
 
 export default function BagsScreen() {
-  const { locations, bags, selectedLocation, setSelectedLocation, setSelectedBag, setView, activeRentalId, currentUser } = useApp();
+  const { locations, bags, selectedLocation, setSelectedLocation, setSelectedBag, setView, activeRentalId, currentUser, setCanStartRental } = useApp();
   const [step, setStep] = useState('location'); // location | bags
   const isNegativeBalance = currentUser.balance < 0;
 
@@ -21,6 +21,7 @@ export default function BagsScreen() {
 
   const handleBagSelect = (bag) => {
     if (!bag.available || isNegativeBalance) return;
+    setCanStartRental(false);
     setSelectedBag(bag);
     setView('rental-detail');
   };

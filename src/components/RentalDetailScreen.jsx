@@ -3,7 +3,7 @@ import { useApp } from '../store/AppContext';
 import { formatElapsed, calcFee } from '../utils/helpers';
 
 export default function RentalDetailScreen() {
-  const { selectedBag, selectedLocation, setView, startRental, tick, activeRentalId, currentUser } = useApp();
+  const { selectedBag, selectedLocation, setView, startRental, tick, activeRentalId, currentUser, canStartRental } = useApp();
   const [confirming, setConfirming] = useState(false);
 
   if (!selectedBag) {
@@ -26,7 +26,7 @@ export default function RentalDetailScreen() {
     <div className="screen animate-fadeInUp">
       {/* Header */}
       <div className="page-header" style={{ background: 'var(--cream)' }}>
-        <button id="detail-back-btn" className="back-btn" onClick={() => setView('bags')}>‹ Geri</button>
+        <button id="detail-back-btn" className="back-btn" onClick={() => setView(canStartRental ? 'home' : 'bags')}>‹ Geri</button>
         <div className="page-title">Kiralama Detayı</div>
         <div style={{ width: 40 }} />
       </div>
@@ -99,7 +99,24 @@ export default function RentalDetailScreen() {
           </div>
         ) : currentUser.balance < 0 ? (
           <div className="error-msg" style={{ textAlign: 'center', color: 'var(--danger)', fontWeight: 'bold' }}>
-            Bakiyeniz eksi değerde. Lütfen önce bakiye yükleyiniz.
+            Bakiyeniz yetersiz. Lütfen bakiye yükleyin.
+          </div>
+        ) : !canStartRental ? (
+          <div style={{ 
+            background: 'var(--green-pale)', 
+            padding: '20px', 
+            borderRadius: 'var(--radius-lg)', 
+            textAlign: 'center',
+            border: '2px dashed var(--green-mid)',
+            marginTop: 20
+          }}>
+            <div style={{ fontSize: 32, marginBottom: 8 }}>📷</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--green-dark)', marginBottom: 4 }}>
+              Kiralama için QR Kodu Gereklidir
+            </div>
+            <div style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              Bu çanta şu anda sadece fiziksel QR kodu okutularak kiralanabilir. Lütfen çanta üzerindeki kodu taratın.
+            </div>
           </div>
         ) : (
           <>

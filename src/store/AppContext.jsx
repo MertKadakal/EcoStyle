@@ -44,6 +44,7 @@ export function AppProvider({ children }) {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedBag, setSelectedBag] = useState(null);
   const [activeRentalId, setActiveRentalId] = useState(null);
+  const [canStartRental, setCanStartRental] = useState(false);
   const [tick, setTick] = useState(0);
 
   // Firestore'dan gerçek zamanlı veri okuma
@@ -342,6 +343,7 @@ export function AppProvider({ children }) {
       selectedLocation, setSelectedLocation,
       selectedBag, setSelectedBag,
       activeRentalId, setActiveRentalId,
+      canStartRental, setCanStartRental,
       tick,
       login, register, logout, updateUserName, deleteUser, addUser,
       startRental, requestReturn, confirmReturn, cancelRental,
