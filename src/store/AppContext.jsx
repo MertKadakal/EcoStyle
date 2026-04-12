@@ -5,27 +5,6 @@ import sweetalert from 'sweetalert2';
 
 const AppContext = createContext(null);
 
-const INITIAL_LOCATIONS = [
-  { id: 'loc1', name: 'Beykoz Üniversitesi Kütüphanesi', address: 'Kütüphane Binası, Zemin Kat', availableBags: 4 },
-  { id: 'loc2', name: 'Merkez Kafeterya', address: 'Öğrenci Merkezi, 1. Kat', availableBags: 2 },
-  { id: 'loc3', name: 'Mühendislik Fakültesi Lobisi', address: 'Mühendislik Binası, Giriş', availableBags: 3 },
-  { id: 'loc4', name: 'Sosyal Bilimler Kafesi', address: 'Sosyal Bilimler, Bahçe Katı', availableBags: 1 },
-];
-
-const INITIAL_BAGS = [
-  { id: 'bag1', name: 'Dayanıklı Kanvas Çanta', type: 'STANDART', size: 'Orta / 27x29 cm', shape: 'Katlanabilir Tote', capacity: '5 kg', features: ['DAYANIKLI', 'LEKE TUTMAZ'], locationId: 'loc1', available: true },
-  { id: 'bag2', name: 'Kompakt Kanvas Çanta', type: 'STANDART', size: 'Küçük / 22x25 cm', shape: 'Tote', capacity: '3 kg', features: ['HAFİF', 'SU GEÇİRMEZ'], locationId: 'loc1', available: true },
-  { id: 'bag3', name: 'Büyük Kanvas Çanta', type: 'PREMIUM', size: 'Büyük / 35x40 cm', shape: 'Tote', capacity: '8 kg', features: ['DAYANIKLI', 'CEPLİ'], locationId: 'loc2', available: true },
-  { id: 'bag4', name: 'Mini Tote Çanta', type: 'STANDART', size: 'Mini / 18x20 cm', shape: 'Mini Tote', capacity: '2 kg', features: ['HAFİF', 'LEKE TUTMAZ'], locationId: 'loc3', available: true },
-  { id: 'bag5', name: 'Kampüs Çantası', type: 'PREMIUM', size: 'Orta / 30x32 cm', shape: 'Katlanabilir', capacity: '6 kg', features: ['DAYANIKLI', 'ÇEVRECİ'], locationId: 'loc1', available: true },
-];
-
-const INITIAL_USERS = [
-  { id: 'user1', name: 'Test Kullanıcı', email: 'kullanici@test.com', password: '1234', balance: 100, rentalHistory: [] },
-  { id: 'user2', name: 'Test Kullanıcı 2', email: 'kullanici2@test.com', password: '1234', balance: 100, rentalHistory: [] },
-  { id: 'admin', name: 'Admin', email: 'admin@ecostyle.com', password: 'admin123', balance: 0, isAdmin: true, rentalHistory: [] },
-];
-
 function calcFee(startTime, stopTime) {
   const end = stopTime || Date.now();
   const elapsed = Math.floor((end - startTime) / 1000);
@@ -175,12 +154,12 @@ export function AppProvider({ children }) {
   const addUser = useCallback(async (userData) => {
     try {
       const newId = `user_${Date.now()}`;
-      const newUser = { 
-        id: newId, 
-        balance: 0, 
-        rentalHistory: [], 
+      const newUser = {
+        id: newId,
+        balance: 0,
+        rentalHistory: [],
         emailVerified: true,
-        ...userData 
+        ...userData
       };
       await setDoc(doc(db, 'users', newId), newUser);
       return true;
