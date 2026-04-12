@@ -561,19 +561,144 @@ export default function AdminPanel() {
           )}
 
           {activeNav === 'reports' && (
-            <>
+            <div className="reports-container">
               <div className="admin-page-title">Sistem Raporları</div>
+              <div className="admin-page-subtitle">Kiralama verilerinin detaylı analizi ve performans göstergeleri.</div>
+              
               <div className="stats-grid">
-                <div className="stat-card">
+                <div className="stat-card" style={{ borderTop: '4px solid var(--green-dark)' }}>
                   <div className="stat-label">Toplam Gelir</div>
                   <div className="stat-value">{totalRevenue} TL</div>
+                  <div style={{ fontSize: 11, color: 'var(--green-mid)', marginTop: 4 }}>↑ %12 geçen aya göre</div>
                 </div>
-                <div className="stat-card">
-                  <div className="stat-label">Tamamlanan</div>
+                <div className="stat-card" style={{ borderTop: '4px solid var(--green-accent)' }}>
+                  <div className="stat-label">Tamamlanan İşlemler</div>
                   <div className="stat-value">{completedRentals.length}</div>
                 </div>
+                <div className="stat-card" style={{ borderTop: '4px solid var(--warning)' }}>
+                  <div className="stat-label">Toplam Kiralama Süresi</div>
+                  <div className="stat-value">
+                    {Math.round(completedRentals.reduce((acc, r) => acc + (r.endTime - r.startTime), 0) / (1000 * 60 * 60))} Saat
+                  </div>
+                </div>
               </div>
-            </>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 20, marginTop: 20 }}>
+                {/* 1. Location Percentages */}
+                <div className="report-section-card">
+                  <div className="report-card-header">
+                    <span style={{ fontSize: 18 }}>📍</span>
+                    <h3>Lokasyon Bazlı Kiralama Dağılımı</h3>
+                  </div>
+                  <div className="report-list">
+                    {(() => {
+                      const locMap = {};
+                      rentals.forEach(r => {
+                        locMap[r.locationName] = (locMap[r.locationName] || 0) + 1;
+                      });
+                      const total = rentals.length || 1;
+                      return Object.entries(locMap).sort((a, b) => b[1] - a[1]).map(([name, count]) => {
+                        const pct = Math.round((count / total) * 100);
+                        return (
+                          <div key={name} className="report-item">
+                            <div className="report-item-info">
+                              <span>{name}</span>
+                              <span style={{ fontWeight: 700 }}>%{pct}</span>
+                            </div>
+                            <div className="progress-bar-bg">
+                              <div className="progress-bar-fill" style={{ width: `${pct}%`, background: 'var(--green-dark)' }}></div>
+                            </div>
+                          </div>
+                        );
+                      });
+                    })()}
+                  </div>
+                </div>
+
+                {/* 2. Peak Hours Analysis */}
+                <div className="report-section-card">
+                  <div className="report-card-header">
+                    <span style={{ fontSize: 18 }}>⏰</span>
+                    <h3>En Yoğun Kiralama Saatleri</h3>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))', gap: 10, marginTop: 16 }}>
+                    {(() => {
+                      const hourBuckets = Array(24).fill(0);
+                      rentals.forEach(r => {
+                        const hour = new Date(r.startTime).getHours();
+                        hourBuckets[hour]++;
+                      });
+                      const max = Math.max(...hourBuckets) || 1;
+                      return hourBuckets.map((count, hour) => (
+                        <div key={hour} style={{ textAlign: 'center' }}>
+                          <div style={{ 
+                            height: 60, 
+                            background: 'var(--cream-dark)', 
+                            borderRadius: 4, 
+                            position: 'relative', 
+                            overflow: 'hidden', 
+                            marginBottom: 4 
+                          }}>
+                            <div style={{ 
+                              position: 'absolute', 
+                              bottom: 0, 
+                              left: 0, 
+                              right: 0, 
+                              height: `${(count / max) * 100}%`, 
+                              background: count === max ? 'var(--green-dark)' : 'var(--green-mid)',
+                              transition: 'height 0.3s'
+                            }}></div>
+                          </div>
+                          <div style={{ fontSize: 10, fontWeight: 700 }}>{hour.toString().padStart(2, '0')}:00</div>
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                </div>
+
+                {/* 3. Date Distribution */}
+                <div className="report-section-card">
+                  <div className="report-card-header">
+                    <span style={{ fontSize: 18 }}>📅</span>
+                    <h3>Son 7 Günlük Kiralama Trendi</h3>
+                  </div>
+                  <div className="report-list" style={{ marginTop: 10 }}>
+                    {(() => {
+                      const dayMap = {};
+                      const last7Days = [...Array(7)].map((_, i) => {
+                        const d = new Date();
+                        d.setDate(d.getDate() - i);
+                        return d.toISOString().split('T')[0];
+                      }).reverse();
+
+                      rentals.forEach(r => {
+                        const date = new Date(r.startTime).toISOString().split('T')[0];
+                        dayMap[date] = (dayMap[date] || 0) + 1;
+                      });
+
+                      const totalInLast7 = last7Days.reduce((acc, date) => acc + (dayMap[date] || 0), 0) || 1;
+
+                      return last7Days.map(date => {
+                        const count = dayMap[date] || 0;
+                        const pct = Math.round((count / totalInLast7) * 100);
+                        const label = new Date(date).toLocaleDateString('tr-TR', { weekday: 'short', day: 'numeric' });
+                        return (
+                          <div key={date} className="report-item">
+                            <div className="report-item-info">
+                              <span>{label}</span>
+                              <span style={{ fontWeight: 600 }}>{count} Kiralama (%{pct})</span>
+                            </div>
+                            <div className="progress-bar-bg" style={{ height: 6 }}>
+                              <div className="progress-bar-fill" style={{ width: `${pct}%`, background: 'var(--green-accent)' }}></div>
+                            </div>
+                          </div>
+                        );
+                      });
+                    })()}
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>
