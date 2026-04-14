@@ -71,7 +71,7 @@ export default function LoginScreen() {
   };
 
   const fillAdmin = () => {
-    setEmail('admin@ecostyle.com');
+    setEmail('admin@beykoz.com');
     setPassword('admin123');
     setError('');
   };

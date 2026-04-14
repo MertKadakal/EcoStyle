@@ -338,8 +338,8 @@ export function useApp() {
 }
 
 const INITIAL_USERS = [
-  { id: 'admin', name: 'Admin', email: 'admin@gmail.com', password: '123', isAdmin: true, balance: 1000, rentalHistory: [], emailVerified: true },
-  { id: 'user1', name: 'Mert Kadakal', email: 'mert@gmail.com', password: '123', isAdmin: false, balance: 100, rentalHistory: [], emailVerified: true },
+  { id: 'admin', name: 'Admin', email: 'admin@beykoz.com', password: 'admin123', isAdmin: true, balance: 1000, rentalHistory: [], emailVerified: true },
+  { id: 'user1', name: 'Mert Kadakal', email: 'mert@beykoz.com', password: '123', isAdmin: false, balance: 100, rentalHistory: [], emailVerified: true },
 ];
 
 const INITIAL_LOCATIONS = [
