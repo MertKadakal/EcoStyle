@@ -100,7 +100,7 @@ export function AppProvider({ children }) {
     const user = users.find(u => u.email === email && u.password === password);
     if (!user) return false;
     setCurrentUser(user);
-    
+
     // Check for admin email specifically
     const isAdmin = email.toLowerCase().trim() === 'admin@beykoz.com';
     setView(isAdmin ? 'admin' : 'home');
@@ -339,21 +339,3 @@ export function AppProvider({ children }) {
 export function useApp() {
   return useContext(AppContext);
 }
-
-const INITIAL_USERS = [
-  { id: 'admin', name: 'Admin', email: 'admin@beykoz.com', password: 'admin123', balance: 1000, rentalHistory: [], emailVerified: true },
-  { id: 'user1', name: 'Mert Kadakal', email: 'mert@beykoz.com', password: '123', balance: 100, rentalHistory: [], emailVerified: true },
-];
-
-const INITIAL_LOCATIONS = [
-  { id: 'loc1', name: 'Beykoz Kütüphanesi', address: 'Beykoz, İstanbul', availableBags: 2 },
-  { id: 'loc2', name: 'Kadıköy Kütüphanesi', address: 'Kadıköy, İstanbul', availableBags: 1 },
-  { id: 'loc3', name: 'Beşiktaş Kütüphanesi', address: 'Beşiktaş, İstanbul', availableBags: 1 },
-];
-
-const INITIAL_BAGS = [
-  { id: 'bag1', name: 'Smart Bag #1', locationId: 'loc1', available: true, type: 'STANDART', size: 'Standart / 25x30 cm', shape: 'Klasik', capacity: '5 kg', features: ['DAYANIKLI', 'YIKANABİLİR'] },
-  { id: 'bag2', name: 'Smart Bag #2', locationId: 'loc1', available: true, type: 'STANDART', size: 'Standart / 25x30 cm', shape: 'Klasik', capacity: '5 kg', features: ['DAYANIKLI'] },
-  { id: 'bag3', name: 'Smart Bag #3', locationId: 'loc2', available: true, type: 'STANDART', size: 'Standart / 25x30 cm', shape: 'Klasik', capacity: '5 kg', features: ['DAYANIKLI', 'SU GEÇİRMEZ'] },
-  { id: 'bag4', name: 'Smart Bag #4', locationId: 'loc3', available: true, type: 'STANDART', size: 'Standart / 25x30 cm', shape: 'Klasik', capacity: '5 kg', features: ['DAYANIKLI'] },
-];
