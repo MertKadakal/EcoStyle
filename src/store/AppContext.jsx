@@ -343,9 +343,9 @@ const INITIAL_USERS = [
 ];
 
 const INITIAL_LOCATIONS = [
-  { id: 'loc1', name: 'Kadıköy Kütüphanesi', address: 'Kadıköy, İstanbul', availableBags: 2 },
-  { id: 'loc2', name: 'Beşiktaş Kütüphanesi', address: 'Beşiktaş, İstanbul', availableBags: 1 },
-  { id: 'loc3', name: 'Üsküdar Kütüphanesi', address: 'Üsküdar, İstanbul', availableBags: 1 },
+  { id: 'loc1', name: 'Beykoz Kütüphanesi', address: 'Beykoz, İstanbul', availableBags: 2 },
+  { id: 'loc2', name: 'Kadıköy Kütüphanesi', address: 'Kadıköy, İstanbul', availableBags: 1 },
+  { id: 'loc3', name: 'Beşiktaş Kütüphanesi', address: 'Beşiktaş, İstanbul', availableBags: 1 },
 ];
 
 const INITIAL_BAGS = [
