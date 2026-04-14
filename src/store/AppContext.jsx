@@ -342,13 +342,15 @@ export function useApp() {
 
 const INITIAL_USERS = [
   { id: 'admin', name: 'Admin', email: 'admin@beykoz.com', password: 'admin123', balance: 1000, rentalHistory: [], emailVerified: true },
-  { id: 'user1', name: 'Mert Kadakal', email: 'mert@beykoz.com', password: '123', balance: 100, rentalHistory: [], emailVerified: true },
 ];
 
 const INITIAL_LOCATIONS = [
   { id: 'loc1', name: 'Beykoz Kütüphanesi', address: 'Beykoz, İstanbul', availableBags: 2 },
   { id: 'loc2', name: 'Kadıköy Kütüphanesi', address: 'Kadıköy, İstanbul', availableBags: 1 },
   { id: 'loc3', name: 'Beşiktaş Kütüphanesi', address: 'Beşiktaş, İstanbul', availableBags: 1 },
+  { id: 'loc4', name: 'Beşiktaş Kütüphanesi', address: 'Beşiktaş, İstanbul', availableBags: 1 },
+  { id: 'loc5', name: 'Beşiktaş Kütüphanesi', address: 'Beşiktaş, İstanbul', availableBags: 1 },
+  { id: 'loc6', name: 'Beşiktaş Kütüphanesi', address: 'Beşiktaş, İstanbul', availableBags: 1 },
 ];
 
 const INITIAL_BAGS = [
