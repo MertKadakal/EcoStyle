@@ -336,3 +336,21 @@ export function AppProvider({ children }) {
 export function useApp() {
   return useContext(AppContext);
 }
+
+const INITIAL_USERS = [
+  { id: 'admin', name: 'Admin', email: 'admin@gmail.com', password: '123', isAdmin: true, balance: 1000, rentalHistory: [], emailVerified: true },
+  { id: 'user1', name: 'Mert Kadakal', email: 'mert@gmail.com', password: '123', isAdmin: false, balance: 100, rentalHistory: [], emailVerified: true },
+];
+
+const INITIAL_LOCATIONS = [
+  { id: 'loc1', name: 'Kadıköy Kütüphanesi', address: 'Kadıköy, İstanbul', availableBags: 2 },
+  { id: 'loc2', name: 'Beşiktaş Kütüphanesi', address: 'Beşiktaş, İstanbul', availableBags: 1 },
+  { id: 'loc3', name: 'Üsküdar Kütüphanesi', address: 'Üsküdar, İstanbul', availableBags: 1 },
+];
+
+const INITIAL_BAGS = [
+  { id: 'bag1', name: 'Smart Bag #1', locationId: 'loc1', available: true, type: 'STANDART', size: 'Standart / 25x30 cm', shape: 'Klasik', capacity: '5 kg', features: ['DAYANIKLI', 'YIKANABİLİR'] },
+  { id: 'bag2', name: 'Smart Bag #2', locationId: 'loc1', available: true, type: 'STANDART', size: 'Standart / 25x30 cm', shape: 'Klasik', capacity: '5 kg', features: ['DAYANIKLI'] },
+  { id: 'bag3', name: 'Smart Bag #3', locationId: 'loc2', available: true, type: 'STANDART', size: 'Standart / 25x30 cm', shape: 'Klasik', capacity: '5 kg', features: ['DAYANIKLI', 'SU GEÇİRMEZ'] },
+  { id: 'bag4', name: 'Smart Bag #4', locationId: 'loc3', available: true, type: 'STANDART', size: 'Standart / 25x30 cm', shape: 'Klasik', capacity: '5 kg', features: ['DAYANIKLI'] },
+];
