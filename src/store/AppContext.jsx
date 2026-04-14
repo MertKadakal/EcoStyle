@@ -100,7 +100,10 @@ export function AppProvider({ children }) {
     const user = users.find(u => u.email === email && u.password === password);
     if (!user) return false;
     setCurrentUser(user);
-    setView(user.isAdmin ? 'admin' : 'home');
+    
+    // Check for admin email specifically
+    const isAdmin = email === 'admin@beykoz.com';
+    setView(isAdmin ? 'admin' : 'home');
 
     // Daha önce açık kiralama var mı kontrolü
     const myRental = rentals.find(r => r.userId === user.id && (r.status === 'active' || r.status === 'overdue' || r.status === 'pending_return'));
@@ -338,8 +341,8 @@ export function useApp() {
 }
 
 const INITIAL_USERS = [
-  { id: 'admin', name: 'Admin', email: 'admin@beykoz.com', password: 'admin123', isAdmin: true, balance: 1000, rentalHistory: [], emailVerified: true },
-  { id: 'user1', name: 'Mert Kadakal', email: 'mert@beykoz.com', password: '123', isAdmin: false, balance: 100, rentalHistory: [], emailVerified: true },
+  { id: 'admin', name: 'Admin', email: 'admin@beykoz.com', password: 'admin123', balance: 1000, rentalHistory: [], emailVerified: true },
+  { id: 'user1', name: 'Mert Kadakal', email: 'mert@beykoz.com', password: '123', balance: 100, rentalHistory: [], emailVerified: true },
 ];
 
 const INITIAL_LOCATIONS = [

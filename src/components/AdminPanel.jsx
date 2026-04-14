@@ -525,7 +525,7 @@ export default function AdminPanel() {
               </div>
 
               <div className="users-list">
-                {users.filter(u => !u.isAdmin).map(user => (
+                {users.filter(u => u.email !== 'admin@beykoz.com').map(user => (
                   <div key={user.id} className="stat-card user-card">
                     <button className="delete-btn" onClick={() => handleDeleteUser(user.id, user.name)}>🗑️</button>
                     <div className="user-header">

@@ -66,7 +66,7 @@ function MobileApp() {
     );
   }
 
-  if (currentUser.isAdmin) {
+  if (currentUser?.email === 'admin@beykoz.com') {
     return (
       <div className="phone-shell">
         <AdminPanel />
