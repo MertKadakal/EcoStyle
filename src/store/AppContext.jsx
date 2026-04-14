@@ -102,7 +102,7 @@ export function AppProvider({ children }) {
     setCurrentUser(user);
     
     // Check for admin email specifically
-    const isAdmin = email === 'admin@beykoz.com';
+    const isAdmin = email.toLowerCase().trim() === 'admin@beykoz.com';
     setView(isAdmin ? 'admin' : 'home');
 
     // Daha önce açık kiralama var mı kontrolü
