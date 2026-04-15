@@ -19,7 +19,7 @@ export default function LoginScreen() {
   const mailGonder = async () => {
     // 1. Göndermek istediğimiz veriler (Şablondaki {{ }} isimleriyle AYNI olmalı)
     const formVerisi = {
-      kime: "istediğin.herhangi.biri@gmail.com", // Artık herkese atabilirsin!
+      kime: "mert.kadakal1629@gmail.com", // Artık herkese atabilirsin!
       konu: "EmailJS ile Doğrudan Ön Yüzden Mesaj",
       mesaj: "Merhaba! Bu mesaj backend olmadan, doğrudan tarayıcıdan gönderildi."
     };
