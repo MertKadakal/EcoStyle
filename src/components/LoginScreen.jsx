@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../store/AppContext';
 import sweetalert from 'sweetalert2';
+import emailjs from '@emailjs/browser';
 
 export default function LoginScreen() {
   const { login, register, users } = useApp();
@@ -15,37 +16,30 @@ export default function LoginScreen() {
   const [verificationCode, setVerificationCode] = useState('');
   const [userInputCode, setUserInputCode] = useState('');
 
-  // İstemci (Frontend) tarafındaki kodun
   const mailGonder = async () => {
-    // Sunucuya göndermek istediğimiz veriler
-    const mailVerisi = {
-      kime: email || "mert.kadakal1629@gmail.com",
-      konu: "EcoStyle Test Maili",
-      mesaj: "Merhaba, bu bir test mailidir. Sunucunuz başarıyla çalışıyor!"
+    // 1. Göndermek istediğimiz veriler (Şablondaki {{ }} isimleriyle AYNI olmalı)
+    const formVerisi = {
+      kime: "istediğin.herhangi.biri@gmail.com", // Artık herkese atabilirsin!
+      konu: "EmailJS ile Doğrudan Ön Yüzden Mesaj",
+      mesaj: "Merhaba! Bu mesaj backend olmadan, doğrudan tarayıcıdan gönderildi."
     };
 
     try {
-      // Sunucunun adresine POST isteği atıyoruz
-      const response = await fetch('https://ecostyleserver.onrender.com/api/mail-gonder', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(mailVerisi)
-      });
+      // 2. EmailJS'in kendi fonksiyonu ile maili gönder
+      // Kullanımı: emailjs.send(SERVICE_ID, TEMPLATE_ID, DATA, PUBLIC_KEY)
+      const sonuc = await emailjs.send(
+        'service_eakq5n4',   // 1. Adımda not ettiğin
+        'template_cunif7j',  // 2. Adımda not ettiğin
+        formVerisi,
+        'cPiBZ6KiXczSEfYev'    // EmailJS panelinde "Account -> API Keys" kısmında bulabilirsin
+      );
 
-      // Sunucudan gelen cevabı oku
-      const sonuc = await response.json();
+      console.log("Süper! Mail başarıyla gönderildi:", sonuc.text);
+      alert("Mesajınız iletildi!");
 
-      if (sonuc.basari) {
-        console.log("Süper! Mail gönderildi.");
-        alert("Mesajınız iletildi!");
-      } else {
-        console.error("Hata:", sonuc.mesaj, sonuc.hata);
-        alert("Bir sorun oluştu: " + (sonuc.hata || sonuc.mesaj));
-      }
     } catch (hata) {
-      console.error("Sunucuya ulaşılamadı:", hata);
+      console.error("Mail gönderilemedi:", hata);
+      alert("Bir sorun oluştu.");
     }
   };
 

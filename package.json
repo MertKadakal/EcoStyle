@@ -18,11 +18,11 @@
     "@capacitor/cli": "^8.3.0",
     "@capacitor/core": "^8.3.0",
     "@capacitor/ios": "^8.3.0",
+    "@emailjs/browser": "^4.4.1",
     "cors": "^2.8.6",
     "expo": "^55.0.13",
     "express": "^5.2.1",
     "firebase": "^12.12.0",
-    "nodemailer": "^8.0.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "sweetalert2": "^11.26.24"
