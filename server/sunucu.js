@@ -17,17 +17,22 @@ app.post('/api/mail-gonder', async (req, res) => {
     // 1. E-posta gönderici ayarlarını yapılandır
     // ÖNEMLİ: Gerçek projelerde şifreleri doğrudan koda yazma, .env dosyası kullan!
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        // auth kısmını böyle değiştiriyoruz:
+        host: 'smtp.gmail.com',
+        port: 587, // 465 yerine güvenli iletişim portunu kullanıyoruz
+        secure: false, // 587 portu için 'false' olmalıdır
         auth: {
             user: process.env.MAIL_ADRESI,
             pass: process.env.MAIL_SIFRESI
+        },
+        tls: {
+            // Render gibi bulut platformlarındaki sertifika çakışmalarını önler
+            rejectUnauthorized: false
         }
     });
 
     // 2. Mail içeriğini ayarla
     const mailOptions = {
-        from: 'mert.kadakal1629@gmail.com',
+        from: process.env.MAIL_ADRESI,
         to: kime,
         subject: konu,
         text: mesaj
@@ -39,7 +44,11 @@ app.post('/api/mail-gonder', async (req, res) => {
         res.status(200).json({ basari: true, mesaj: 'E-posta başarıyla gönderildi!' });
     } catch (hata) {
         console.error(hata);
-        res.status(500).json({ basari: false, mesaj: 'E-posta gönderilirken bir hata oluştu.' });
+        res.status(500).json({
+            basari: false,
+            mesaj: 'E-posta gönderilirken bir hata oluştu.',
+            hata: hata.message
+        });
     }
 });
 

@@ -19,14 +19,14 @@ export default function LoginScreen() {
   const mailGonder = async () => {
     // Sunucuya göndermek istediğimiz veriler
     const mailVerisi = {
-      kime: "alici@ornek.com",
-      konu: "Projemden Gelen Harika İstek",
-      mesaj: "Merhaba, bu sunucu üzerinden güvenli bir şekilde gönderildi."
+      kime: email || "mert.kadakal1629@gmail.com",
+      konu: "EcoStyle Test Maili",
+      mesaj: "Merhaba, bu bir test mailidir. Sunucunuz başarıyla çalışıyor!"
     };
 
     try {
       // Sunucunun adresine POST isteği atıyoruz
-      const response = await fetch('http://localhost:3000/api/mail-gonder', {
+      const response = await fetch('https://ecostyleserver.onrender.com/api/mail-gonder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -41,8 +41,8 @@ export default function LoginScreen() {
         console.log("Süper! Mail gönderildi.");
         alert("Mesajınız iletildi!");
       } else {
-        console.error("Hata:", sonuc.mesaj);
-        alert("Bir sorun oluştu.");
+        console.error("Hata:", sonuc.mesaj, sonuc.hata);
+        alert("Bir sorun oluştu: " + (sonuc.hata || sonuc.mesaj));
       }
     } catch (hata) {
       console.error("Sunucuya ulaşılamadı:", hata);
