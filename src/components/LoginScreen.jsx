@@ -16,33 +16,6 @@ export default function LoginScreen() {
   const [verificationCode, setVerificationCode] = useState('');
   const [userInputCode, setUserInputCode] = useState('');
 
-  const mailGonder = async () => {
-    // 1. Göndermek istediğimiz veriler (Şablondaki {{ }} isimleriyle AYNI olmalı)
-    const formVerisi = {
-      kime: "mert.kadakal1629@gmail.com", // Artık herkese atabilirsin!
-      konu: "EmailJS ile Doğrudan Ön Yüzden Mesaj",
-      mesaj: "Merhaba! Bu mesaj backend olmadan, doğrudan tarayıcıdan gönderildi."
-    };
-
-    try {
-      // 2. EmailJS'in kendi fonksiyonu ile maili gönder
-      // Kullanımı: emailjs.send(SERVICE_ID, TEMPLATE_ID, DATA, PUBLIC_KEY)
-      const sonuc = await emailjs.send(
-        'service_eakq5n4',   // 1. Adımda not ettiğin
-        'template_cunif7j',  // 2. Adımda not ettiğin
-        formVerisi,
-        'cPiBZ6KiXczSEfYev'    // EmailJS panelinde "Account -> API Keys" kısmında bulabilirsin
-      );
-
-      console.log("Süper! Mail başarıyla gönderildi:", sonuc.text);
-      alert("Mesajınız iletildi!");
-
-    } catch (hata) {
-      console.error("Mail gönderilemedi:", hata);
-      alert("Bir sorun oluştu.");
-    }
-  };
-
   // Bu fonksiyonu bir butonun tıklanma olayına (onClick) bağlayabilirsin
 
   const handleLogin = (e) => {
@@ -84,7 +57,7 @@ export default function LoginScreen() {
         {
           kime: email,
           konu: 'EcoStyle Kayıt Doğrulama',
-          mesaj: `EcoStyle'a hoş geldiniz! Kayıt işleminizi tamamlamak için doğrulama kodunuz: ${code}`
+          mesaj: `EcoStyle'a hoş geldiniz! Kayıt işleminizi tamamlamak için doğrulama kodunuz:\n\n ${code}`
         },
         'cPiBZ6KiXczSEfYev'
       );
@@ -95,10 +68,10 @@ export default function LoginScreen() {
 
       sweetalert.fire({
         title: 'Kod Gönderildi!',
-        text: 'Lütfen e-posta kutunuzu (gereksiz klasörünü de) kontrol edin.',
+        text: 'Lütfen e-posta kutunuzu (spamlar dahil) kontrol edin.',
         icon: 'success',
         confirmButtonText: 'Tamam',
-        confirmButtonColor: 'var(--green-main)'
+        confirmButtonColor: '#15661fff'
       });
     } catch (hata) {
       console.error("EmailJS Hatası:", hata);
@@ -141,7 +114,6 @@ export default function LoginScreen() {
 
   return (
     <div className="login-screen">
-      <button onClick={mailGonder}>Test Mail Gönder</button>
 
       <div className="login-hero">
         <div className="login-logo">🌿 EcoStyle</div>
@@ -192,13 +164,13 @@ export default function LoginScreen() {
               <input id="reg-verify-code" className="input-field" type="text" maxLength="6" placeholder="000000" value={userInputCode} onChange={e => setUserInputCode(e.target.value.replace(/\D/g, ''))} style={{ textAlign: 'center', fontSize: 24, letterSpacing: 8, fontWeight: 'bold' }} />
             </div>
             <button id="btn-verify-submit" type="submit" className="btn-primary">Doğrula ve Kayıt Ol</button>
-            <button type="button" className="btn-secondary" style={{ marginTop: 12, background: 'none', border: 'none', color: 'var(--green-main)', textDecoration: 'underline' }} onClick={() => { 
-                setIsVerifying(false); 
-                setTab('login');
-                setVerificationCode('');
-                setUserInputCode('');
-                setError('');
-              }}>
+            <button type="button" className="btn-secondary" style={{ marginTop: 12, background: 'none', border: 'none', color: 'var(--green-main)', textDecoration: 'underline' }} onClick={() => {
+              setIsVerifying(false);
+              setTab('login');
+              setVerificationCode('');
+              setUserInputCode('');
+              setError('');
+            }}>
               Geri Dön
             </button>
           </form>
