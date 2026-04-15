@@ -15,6 +15,42 @@ export default function LoginScreen() {
   const [verificationCode, setVerificationCode] = useState('');
   const [userInputCode, setUserInputCode] = useState('');
 
+  // İstemci (Frontend) tarafındaki kodun
+  const mailGonder = async () => {
+    // Sunucuya göndermek istediğimiz veriler
+    const mailVerisi = {
+      kime: "alici@ornek.com",
+      konu: "Projemden Gelen Harika İstek",
+      mesaj: "Merhaba, bu sunucu üzerinden güvenli bir şekilde gönderildi."
+    };
+
+    try {
+      // Sunucunun adresine POST isteği atıyoruz
+      const response = await fetch('http://localhost:3000/api/mail-gonder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(mailVerisi)
+      });
+
+      // Sunucudan gelen cevabı oku
+      const sonuc = await response.json();
+
+      if (sonuc.basari) {
+        console.log("Süper! Mail gönderildi.");
+        alert("Mesajınız iletildi!");
+      } else {
+        console.error("Hata:", sonuc.mesaj);
+        alert("Bir sorun oluştu.");
+      }
+    } catch (hata) {
+      console.error("Sunucuya ulaşılamadı:", hata);
+    }
+  };
+
+  // Bu fonksiyonu bir butonun tıklanma olayına (onClick) bağlayabilirsin
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (!email || !password) { setError('Lütfen tüm alanları doldurun.'); return; }
@@ -78,6 +114,8 @@ export default function LoginScreen() {
 
   return (
     <div className="login-screen">
+      <button onClick={mailGonder}>Test Mail Gönder</button>
+
       <div className="login-hero">
         <div className="login-logo">🌿 EcoStyle</div>
         <div className="login-tagline">Sürdürülebilir bir gelecek için bugün ne yapıyoruz?</div>
