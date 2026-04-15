@@ -52,7 +52,7 @@ export default function LoginScreen() {
     if (!ok) setError('E-posta veya şifre hatalı.');
   };
 
-  const startRegistration = (e) => {
+  const startRegistration = async (e) => {
     e.preventDefault();
     if (!name || !email || !password) { setError('Lütfen tüm alanları doldurun.'); return; }
     if (password.length < 4) { setError('Şifre en az 4 karakter olmalıdır.'); return; }
@@ -65,23 +65,56 @@ export default function LoginScreen() {
 
     // Generate random 6-digit code
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    setVerificationCode(code);
-    setIsVerifying(true);
-    setError('');
 
+    // Show sending alert
     sweetalert.fire({
-      title: 'Doğrulama Kodu Gönderildi',
-      html: `E-postanıza bir doğrulama kodu gönderildi.<br><br><b>Simülasyon Kodu: <span style="color:var(--green-main); font-size: 24px;">${code}</span></b>`,
-      icon: 'info',
-      confirmButtonText: 'Tamam',
-      confirmButtonColor: 'var(--green-main)'
+      title: 'Gönderiliyor...',
+      text: 'Doğrulama kodu e-posta adresinize gönderiliyor.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        sweetalert.showLoading();
+      }
     });
+
+    try {
+      // Send code via EmailJS
+      await emailjs.send(
+        'service_eakq5n4',
+        'template_cunif7j',
+        {
+          kime: email,
+          konu: 'EcoStyle Kayıt Doğrulama',
+          mesaj: `EcoStyle'a hoş geldiniz! Kayıt işleminizi tamamlamak için doğrulama kodunuz: ${code}`
+        },
+        'cPiBZ6KiXczSEfYev'
+      );
+
+      setVerificationCode(code);
+      setIsVerifying(true);
+      setError('');
+
+      sweetalert.fire({
+        title: 'Kod Gönderildi!',
+        text: 'Lütfen e-posta kutunuzu (gereksiz klasörünü de) kontrol edin.',
+        icon: 'success',
+        confirmButtonText: 'Tamam',
+        confirmButtonColor: 'var(--green-main)'
+      });
+    } catch (hata) {
+      console.error("EmailJS Hatası:", hata);
+      sweetalert.fire({
+        title: 'Hata!',
+        text: 'Doğrulama kodu gönderilemedi. Lütfen e-posta adresinizi kontrol edin veya daha sonra tekrar deneyin.',
+        icon: 'error'
+      });
+    }
   };
 
   const handleVerifyAndRegister = async (e) => {
     e.preventDefault();
     if (userInputCode !== verificationCode) {
       setError('Hatalı doğrulama kodu!');
+      sweetalert.fire('Hata', 'Hatalı doğrulama kodu!', 'error');
       return;
     }
 
