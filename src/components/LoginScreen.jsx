@@ -192,7 +192,7 @@ export default function LoginScreen() {
               <input id="reg-verify-code" className="input-field" type="text" maxLength="6" placeholder="000000" value={userInputCode} onChange={e => setUserInputCode(e.target.value.replace(/\D/g, ''))} style={{ textAlign: 'center', fontSize: 24, letterSpacing: 8, fontWeight: 'bold' }} />
             </div>
             <button id="btn-verify-submit" type="submit" className="btn-primary">Doğrula ve Kayıt Ol</button>
-            <button type="button" className="btn-secondary" style={{ marginTop: 12, background: 'none', border: 'none', color: 'var(--green-main)', textDecoration: 'underline' }} onClick={() => setIsVerifying(false)}>
+            <button type="button" className="btn-secondary" style={{ marginTop: 12, background: 'none', border: 'none', color: 'var(--green-main)', textDecoration: 'underline' }} onClick={() => setTab('login')}>
               Geri Dön
             </button>
           </form>
