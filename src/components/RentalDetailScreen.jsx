@@ -3,7 +3,7 @@ import { useApp } from '../store/AppContext';
 import { formatElapsed, calcFee } from '../utils/helpers';
 
 export default function RentalDetailScreen() {
-  const { selectedBag, selectedLocation, setView, startRental, tick, activeRentalId, currentUser, canStartRental } = useApp();
+  const { selectedBag, selectedLocation, setView, startRental, tick, activeRentalId, currentUser } = useApp();
   const [confirming, setConfirming] = useState(false);
 
   if (!selectedBag) {
@@ -26,7 +26,7 @@ export default function RentalDetailScreen() {
     <div className="screen animate-fadeInUp">
       {/* Header */}
       <div className="page-header" style={{ background: 'var(--cream)' }}>
-        <button id="detail-back-btn" className="back-btn" onClick={() => setView(canStartRental ? 'home' : 'bags')}>‹ Geri</button>
+        <button id="detail-back-btn" className="back-btn" onClick={() => setView('bags')}>‹ Geri</button>
         <div className="page-title">Kiralama Detayı</div>
         <div style={{ width: 40 }} />
       </div>
@@ -101,23 +101,6 @@ export default function RentalDetailScreen() {
           <div className="error-msg" style={{ textAlign: 'center', color: 'var(--danger)', fontWeight: 'bold' }}>
             Bakiyeniz yetersiz. Lütfen bakiye yükleyin.
           </div>
-        ) : !canStartRental ? (
-          <div style={{
-            background: 'var(--green-pale)',
-            padding: '20px',
-            borderRadius: 'var(--radius-lg)',
-            textAlign: 'center',
-            border: '2px dashed var(--green-mid)',
-            marginTop: 20
-          }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>📷</div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--green-dark)', marginBottom: 4 }}>
-              QR Kodu
-            </div>
-            <div style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              Kiralamak için lütfen çanta üzerindeki QR kodu taratın.
-            </div>
-          </div>
         ) : (
           <>
             <button
@@ -125,7 +108,7 @@ export default function RentalDetailScreen() {
               className="btn-primary"
               onClick={handleStart}
               disabled={confirming}
-              style={{ marginBottom: 8 }}
+              style={{ marginBottom: 8, background: 'var(--green-dark)', height: 60, fontSize: 18 }}
             >
               {confirming ? '⏳ Başlatılıyor...' : <><span>Kiralamayı Başlat</span><span>▶</span></>}
             </button>
