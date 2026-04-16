@@ -54,25 +54,15 @@ export default function HomeScreen() {
         <div className="home-app-bar">
           <div className="app-logo">
             <span>🌿</span>
-            <span>EcoStyle</span>
+            <span>LockNest</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <button 
-              id="home-qr-header-btn" 
-              onClick={() => setIsScanning(true)}
-              style={{ background: 'var(--green-pale)', border: 'none', cursor: 'pointer', fontSize: 18, width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyCenter: 'center' }}
-            >
-              📷
-            </button>
-            <button id="home-notif-btn" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20 }}>🔔</button>
-          </div>
+
         </div>
 
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 2 }}>
             {greeting}, {currentUser.name.split(' ')[0]}
           </h1>
-          <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Sürdürülebilir bir gelecek için bugün ne yapıyoruz?</p>
         </div>
       </div>
 
@@ -145,32 +135,14 @@ export default function HomeScreen() {
             <div className="bag-type-badge">STANDART</div>
           </div>
           <div className="bag-info">
-            <div className="bag-name">Dayanıklı Kanvas Çanta</div>
+            <div className="bag-name">LockNest Güvenli Çanta</div>
             <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 10 }}>
-              %100 geri dönüştürülmüş pamuktan üretilen günlük kullanım dostu.
+              Masaya sabitlenebilen, eşyalarınızı koruyan akıllı kiralama çözümü.
             </p>
             <div className="bag-features">
               <span className="feature-chip">DAYANIKLI</span>
               <span className="feature-chip">LEKE TUTMAZ</span>
             </div>
-          </div>
-        </div>
-
-        {/* Quick Stats */}
-        <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <div className="card" style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 24, marginBottom: 4 }}>🌱</div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--green-dark)' }}>
-              {currentUser.rentalHistory?.length || 0}
-            </div>
-            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Toplam Kiralama</div>
-          </div>
-          <div className="card" style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 24, marginBottom: 4 }}>♻️</div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--green-dark)' }}>
-              {(currentUser.rentalHistory?.length || 0) * 2} kg
-            </div>
-            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>CO₂ Tasarrufu</div>
           </div>
         </div>
       </div>

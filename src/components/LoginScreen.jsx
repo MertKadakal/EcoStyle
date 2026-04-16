@@ -56,8 +56,8 @@ export default function LoginScreen() {
         'template_cunif7j',
         {
           kime: email,
-          konu: 'EcoStyle Kayıt Doğrulama',
-          mesaj: `EcoStyle'a hoş geldiniz! Kayıt işleminizi tamamlamak için doğrulama kodunuz:\n\n ${code}`
+          konu: 'LockNest Kayıt Doğrulama',
+          mesaj: `LockNest'e hoş geldiniz! Kayıt işleminizi tamamlamak için doğrulama kodunuz:\n\n ${code}`
         },
         'cPiBZ6KiXczSEfYev'
       );
@@ -116,8 +116,7 @@ export default function LoginScreen() {
     <div className="login-screen">
 
       <div className="login-hero">
-        <div className="login-logo">🌿 EcoStyle</div>
-        <div className="login-tagline">Sürdürülebilir bir gelecek için bugün ne yapıyoruz?</div>
+        <div className="login-logo">🌿 LockNest</div>
         {/* Bag illustration */}
         <div style={{ fontSize: 72, marginTop: 20, marginBottom: 8 }}>👜</div>
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>
@@ -191,11 +190,6 @@ export default function LoginScreen() {
             <button id="btn-register-submit" type="submit" className="btn-primary">Doğrulama Kodu Gönder</button>
           </form>
         )}
-
-        <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', marginTop: 24, lineHeight: 1.6 }}>
-          EcoStyle ile sürdürülebilir bir gelecek oluşturuyoruz. 🌱<br />
-          %100 geri dönüştürülmüş kanvas çantalarımızla tanışın.
-        </p>
       </div>
     </div>
   );
