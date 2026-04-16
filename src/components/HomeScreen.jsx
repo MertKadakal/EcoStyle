@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { useApp } from '../store/AppContext';
 import { formatElapsed, calcFee } from '../utils/helpers';
 import sweetalert from 'sweetalert2';
-import QRScanner from './QRScanner';
 
 export default function HomeScreen() {
-  const { currentUser, setView, rentals, activeRentalId, tick, addBalance } = useApp();
-  const [isScanning, setIsScanning] = useState(false);
+  const { currentUser, setView, rentals, activeRentalId, requestReturn, addBalance } = useApp();
 
   const activeRental = rentals.find(r => r.id === activeRentalId);
   const isPending = activeRental?.status === 'pending_return';
@@ -16,8 +14,25 @@ export default function HomeScreen() {
   const currentFee = activeRental ? calcFee(activeRental.startTime, stopTime) : 0;
 
   const today = new Date();
-  const timeStr = today.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
   const greeting = today.getHours() < 12 ? 'Günaydın' : today.getHours() < 18 ? 'İyi günler' : 'İyi akşamlar';
+
+  const handleToggleRental = () => {
+    if (activeRentalId) {
+      if (isPending) {
+        setView('active-rental');
+      } else {
+        requestReturn(activeRentalId);
+        sweetalert.fire({
+          title: 'Teslim Talebi',
+          text: 'Teslim talebiniz oluşturuldu. Yetkili onayı bekleniyor.',
+          icon: 'success',
+          confirmButtonColor: '#0e5a12ff'
+        });
+      }
+    } else {
+      setView('bags');
+    }
+  };
 
   const handleAddBalance = () => {
     sweetalert.fire({
@@ -48,15 +63,12 @@ export default function HomeScreen() {
 
   return (
     <div className="screen animate-fadeInUp">
-      {isScanning && <QRScanner onClose={() => setIsScanning(false)} />}
-
       <div className="home-header">
         <div className="home-app-bar">
           <div className="app-logo">
             <span>🌿</span>
             <span>LockNest</span>
           </div>
-
         </div>
 
         <div>
@@ -107,16 +119,31 @@ export default function HomeScreen() {
 
         {/* Action Buttons */}
         <div className="action-btn-row">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            <button id="home-scan-btn" className="action-btn-green" onClick={() => setIsScanning(true)} style={{ justifyContent: 'center', gap: 10 }}>
-              <span style={{ fontSize: 18 }}>📷</span>
-              <span>QR TARA</span>
-            </button>
-            <button id="home-rent-btn" className="action-btn-green" onClick={() => setView('bags')} style={{ justifyContent: 'center', gap: 10, background: 'var(--green-dark)' }}>
-              <span style={{ fontSize: 18 }}>👜</span>
-              <span>LİSTELE</span>
-            </button>
-          </div>
+          <button 
+            id="home-toggle-rental-btn" 
+            className="action-btn-green" 
+            onClick={handleToggleRental} 
+            style={{ 
+              justifyContent: 'center', 
+              gap: 12, 
+              background: activeRentalId ? (isPending ? 'var(--warning)' : 'var(--danger)') : 'var(--green-dark)',
+              height: 70,
+              fontSize: 18
+            }}
+          >
+            {activeRentalId ? (
+              <>
+                <span style={{ fontSize: 24 }}>{isPending ? '🔄' : '⏹️'}</span>
+                <span>{isPending ? 'ONAY BEKLENİYOR' : 'KİRALAMAYI DURDUR'}</span>
+              </>
+            ) : (
+              <>
+                <span style={{ fontSize: 24 }}>👜</span>
+                <span>KİRALAMAYI BAŞLAT</span>
+              </>
+            )}
+          </button>
+          
           <button id="home-balance-btn" className="action-btn-cream" onClick={handleAddBalance}>
             <span>➕</span>
             <span>BAKİYE YÜKLE</span>

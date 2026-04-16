@@ -70,11 +70,6 @@ export default function BagsScreen() {
               <div className="location-bags">{loc.availableBags} çanta</div>
             </div>
           ))}
-
-          <div style={{ marginTop: 16, fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', lineHeight: 1.6 }}>
-            🌍 Tüm çantalarımız %100 geri dönüştürülmüş<br />
-            pamuktan üretilmektedir.
-          </div>
         </div>
       </div>
     );
