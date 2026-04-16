@@ -97,7 +97,7 @@ export default function ProfileScreen() {
 
       <div className="page-content" style={{ paddingTop: 16 }}>
         {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, marginBottom: 20 }}>
           <div className="card" style={{ textAlign: 'center', marginBottom: 0 }}>
             <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--green-dark)' }}>{allHistory.length}</div>
             <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', marginTop: 2 }}>KİRALAMA</div>
