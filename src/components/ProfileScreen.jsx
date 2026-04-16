@@ -106,10 +106,6 @@ export default function ProfileScreen() {
             <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--green-dark)' }}>{totalSpent} TL</div>
             <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', marginTop: 2 }}>HARCAMA</div>
           </div>
-          <div className="card" style={{ textAlign: 'center', marginBottom: 0 }}>
-            <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--green-dark)' }}>{allHistory.length * 2}kg</div>
-            <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', marginTop: 2 }}>CO₂ TASARRUFU</div>
-          </div>
         </div>
 
         {/* Balance Card */}
