@@ -63,10 +63,9 @@ export default function ActiveRentalScreen() {
   const isOverdue = rental.status === 'overdue';
   const isPending = rental.status === 'pending_return';
   
-  const stopTime = isPending ? rental.returnRequestTime : undefined;
-  const end = stopTime || Date.now();
+  const end = Date.now();
   const elapsed = Math.floor((end - rental.startTime) / 1000);
-  const currentFee = calcFee(rental.startTime, stopTime);
+  const currentFee = calcFee(rental.startTime, end);
   const unitRate = 15;
 
   const handleReturn = () => {

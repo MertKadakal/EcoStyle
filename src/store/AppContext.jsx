@@ -233,14 +233,14 @@ export function AppProvider({ children }) {
     const rental = rentals.find(r => r.id === rentalId);
     if (!rental) return;
 
-    const endTime = rental.returnRequestTime || Date.now();
+    const endTime = Date.now();
     const fee = calcFee(rental.startTime, endTime);
 
     // Kiralama durumunu güncelle
     await updateDoc(doc(db, 'rentals', rentalId), {
       status: 'completed',
       fee,
-      endTime: Date.now()
+      endTime
     });
 
     // Çantayı tekrar müsait yap
@@ -249,7 +249,7 @@ export function AppProvider({ children }) {
     // Kullanıcı işlemini tamamla
     const userToUpdate = users.find(u => u.id === rental.userId);
     if (userToUpdate) {
-      const historyItem = { ...rental, fee, status: 'completed', endTime: Date.now() };
+      const historyItem = { ...rental, fee, status: 'completed', endTime };
       await updateDoc(doc(db, 'users', rental.userId), {
         balance: userToUpdate.balance - fee,
         rentalHistory: [...(userToUpdate.rentalHistory || []), historyItem]

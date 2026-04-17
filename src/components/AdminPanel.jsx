@@ -288,7 +288,7 @@ export default function AdminPanel() {
                           <div className={rental.status === 'overdue' ? 'warning-text' : ''}>
                             {rental.status === 'completed'
                               ? formatElapsed(Math.floor((rental.endTime - rental.startTime) / 1000))
-                              : <LiveCounter startTime={rental.startTime} stopTime={rental.returnRequestTime} />}
+                              : <LiveCounter startTime={rental.startTime} stopTime={undefined} />}
                           </div>
                         </div>
                         <div className="counter-cell">
@@ -296,7 +296,7 @@ export default function AdminPanel() {
                           <div className="fee-text">
                             {rental.status === 'completed'
                               ? `${rental.fee} TL`
-                              : <LiveFee startTime={rental.startTime} stopTime={rental.returnRequestTime} />}
+                              : <LiveFee startTime={rental.startTime} stopTime={undefined} />}
                           </div>
                         </div>
                       </div>
@@ -444,7 +444,7 @@ export default function AdminPanel() {
                           <span className={`badge ${STATUS_BADGE_CLASS[rental.status]}`}>{STATUS_LABELS[rental.status]}</span>
                         </td>
                         <td style={{ fontWeight: 700, color: 'var(--green-dark)' }}>
-                          {rental.status === 'completed' ? `${rental.fee} TL` : <LiveFee startTime={rental.startTime} stopTime={rental.returnRequestTime} />}
+                          {rental.status === 'completed' ? `${rental.fee} TL` : <LiveFee startTime={rental.startTime} stopTime={undefined} />}
                         </td>
                         <td>
                           {rental.status === 'pending_return' && (

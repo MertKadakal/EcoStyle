@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useApp } from '../store/AppContext';
-import { formatElapsed, calcFee } from '../utils/helpers';
 import sweetalert from 'sweetalert2';
 
 export default function HomeScreen() {
@@ -8,10 +7,6 @@ export default function HomeScreen() {
 
   const activeRental = rentals.find(r => r.id === activeRentalId);
   const isPending = activeRental?.status === 'pending_return';
-  const stopTime = isPending ? activeRental.returnRequestTime : undefined;
-  const end = stopTime || Date.now();
-  const elapsed = activeRental ? Math.floor((end - activeRental.startTime) / 1000) : 0;
-  const currentFee = activeRental ? calcFee(activeRental.startTime, stopTime) : 0;
 
   const today = new Date();
   const greeting = today.getHours() < 12 ? 'Günaydın' : today.getHours() < 18 ? 'İyi günler' : 'İyi akşamlar';
@@ -87,61 +82,23 @@ export default function HomeScreen() {
           <div className="wallet-amount">{currentUser.balance} TL</div>
         </div>
 
-        {/* Active Rental Alert */}
-        {activeRental && activeRental.status !== 'completed' && activeRental.status !== 'cancelled' && (
-          <div
-            id="home-active-rental-banner"
-            onClick={() => setView('active-rental')}
-            style={{
-              background: 'linear-gradient(135deg, #FF8A00, #FF5733)',
-              borderRadius: 'var(--radius-lg)',
-              padding: '14px 18px',
-              marginBottom: 12,
-              color: 'white',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <div>
-              <div style={{ fontSize: 11, fontWeight: 700, opacity: 0.8, marginBottom: 2 }}>AKTİF KİRALAMA</div>
-              <div style={{ fontSize: 15, fontWeight: 700 }}>{activeRental.bagName}</div>
-              <div style={{ fontSize: 20, fontWeight: 900, letterSpacing: 2, marginTop: 2 }}>{formatElapsed(elapsed)}</div>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 11, opacity: 0.8 }}>Biriken Ücret</div>
-              <div style={{ fontSize: 24, fontWeight: 900 }}>{currentFee} TL</div>
-              <div style={{ fontSize: 12, marginTop: 4 }}>Görüntüle →</div>
-            </div>
-          </div>
-        )}
 
         {/* Action Buttons */}
         <div className="action-btn-row">
           <button 
             id="home-toggle-rental-btn" 
             className="action-btn-green" 
-            onClick={handleToggleRental} 
+            onClick={() => setView('bags')} 
             style={{ 
               justifyContent: 'center', 
               gap: 12, 
-              background: activeRentalId ? (isPending ? 'var(--warning)' : 'var(--danger)') : 'var(--green-dark)',
+              background: 'var(--green-dark)',
               height: 70,
               fontSize: 18
             }}
           >
-            {activeRentalId ? (
-              <>
-                <span style={{ fontSize: 24 }}>{isPending ? '🔄' : '⏹️'}</span>
-                <span>{isPending ? 'ONAY BEKLENİYOR' : 'KİRALAMAYI DURDUR'}</span>
-              </>
-            ) : (
-              <>
-                <span style={{ fontSize: 24 }}>👜</span>
-                <span>KİRALAMAYI BAŞLAT</span>
-              </>
-            )}
+            <span style={{ fontSize: 24 }}>👜</span>
+            <span>KİRALAMAYI BAŞLAT</span>
           </button>
           
           <button id="home-balance-btn" className="action-btn-cream" onClick={handleAddBalance}>
