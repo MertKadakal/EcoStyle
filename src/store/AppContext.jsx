@@ -233,7 +233,7 @@ export function AppProvider({ children }) {
     const rental = rentals.find(r => r.id === rentalId);
     if (!rental) return;
 
-    const endTime = rental.returnRequestTime || Date.now();
+    const endTime = Date.now();
     const fee = calcFee(rental.startTime, endTime);
 
     // Kiralama durumunu güncelle
